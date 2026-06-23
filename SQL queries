@@ -1,0 +1,59 @@
+CREATE DATABASE ecommerce;
+USE ecommerce;
+CREATE TABLE Ecommerce_Sales_data (
+    Order_Date date,
+    Product_Name VARCHAR(100),
+    Category VARCHAR(50),
+    Region VARCHAR(50),
+    Quantity INT,
+    Sales DECIMAL(10,2),
+    Profit DECIMAL(10,2)
+);
+SHOW TABLES;
+SELECT COUNT(*) FROM ecommerce_sales_data;
+SELECT * 
+FROM ecommerce_sales_data
+LIMIT 10;
+DESCRIBE ecommerce_sales_data;
+
+CREATE TABLE best_selling_products AS
+SELECT Product_Name,
+       SUM(Sales) AS Total_Sales
+FROM ecommerce_sales_data
+GROUP BY Product_Name
+ORDER BY Total_Sales DESC
+LIMIT 10;
+
+CREATE TABLE profit_region AS
+SELECT Region,
+       SUM(Profit) AS Total_Profit
+FROM ecommerce_sales_data
+GROUP BY Region
+ORDER BY Total_Profit DESC;
+
+CREATE TABLE category_performance AS
+SELECT Category,
+       SUM(Sales) AS Total_Sales,
+       SUM(Profit) AS Total_Profit
+FROM ecommerce_sales_data
+GROUP BY Category
+ORDER BY Total_Sales DESC;
+
+CREATE TABLE profit_margin AS
+SELECT Product_Name,
+       ROUND((SUM(Profit)/SUM(Sales))*100,2) AS Profit_Margin
+FROM ecommerce_sales_data
+GROUP BY Product_Name
+ORDER BY Profit_Margin DESC
+LIMIT 10;
+
+CREATE TABLE monthly_sales AS
+SELECT DATE_FORMAT(Order_Date,'%Y-%m') AS Month,
+       SUM(Sales) AS Total_Sales
+FROM ecommerce_sales_data
+GROUP BY DATE_FORMAT(Order_Date,'%Y-%m')
+ORDER BY Month;
+DROP TABLE ecommerce_sales;
+
+RENAME TABLE ecommerce_sales_data TO ecommerce_sales;
+SELECT COUNT(*) FROM ecommerce_sales;
