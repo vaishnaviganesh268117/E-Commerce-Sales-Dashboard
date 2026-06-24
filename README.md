@@ -135,5 +135,5 @@ Provides an overall business overview.
 
 ## Author
 
-**vaishnavi**
-B.Tech – Artificial Intelligence and Data Science
+**Vaishnavi G**
+B.Tech-Artificial Intelligence and Data Science
